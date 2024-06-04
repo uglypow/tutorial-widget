@@ -1,100 +1,45 @@
-import autoprefixer from "autoprefixer";
+import dotenv from "dotenv";
+import HtmlWebpackPlugin from "html-webpack-plugin";
+import MiniCssExtractPlugin from "mini-css-extract-plugin";
 import path from "path";
-import postcssImport from "postcss-import";
-import postcssNestedImport from "postcss-nested-import";
-import tailwindcss from "tailwindcss";
-import TerserWebpackPlugin from "terser-webpack-plugin";
-import { ProgressPlugin } from "webpack";
+import { DefinePlugin } from "webpack";
 import { ConfigOptions } from "webpack-cli";
-import important from "./plugins/postcss/important";
-import TsConfigPathsResolvePlugin from "./plugins/webpack/tsconfigPathsResolve";
-
-const postcssOptions = {
-  plugins: [
-    postcssImport(),
-    postcssNestedImport(),
-    tailwindcss(),
-    important(),
-    autoprefixer(),
-  ],
-};
+import "webpack-dev-server";
 
 const config: ConfigOptions = {
-  mode: "production",
-  entry: "./src/index.ts",
-  experiments: {
-    outputModule: true,
-  },
+  mode: "development",
+  entry: "./src/index.tsx",
   output: {
     path: path.resolve(__dirname, "dist"),
-    publicPath: "auto",
-    library: {
-      type: "module",
-    },
-    filename: (pathData) => {
-      const chunk = pathData.chunk!;
-
-      if (chunk.name === "main") {
-        return "index.js";
-      }
-
-      return "[name].js";
-    },
-    assetModuleFilename: "assets/[name][ext]",
+    filename: "[name].js",
     clean: true,
   },
-  optimization: {
-    minimizer: [
-      new TerserWebpackPlugin({
-        extractComments: false,
-      }),
-    ],
+  devServer: {
+    static: path.resolve(__dirname, "dist"),
+    compress: true,
+    port: 3000,
+    historyApiFallback: true,
   },
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        exclude: /node_modules/,
         use: "ts-loader",
       },
       {
         test: /\.css$/,
-        use: [
-          "style-loader",
-          "css-loader",
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions,
-            },
-          },
-        ],
+        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.s[ac]ss$/,
         use: [
-          "style-loader",
+          MiniCssExtractPlugin.loader,
           "css-loader",
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions,
-            },
-          },
+          "postcss-loader",
           {
             loader: "sass-loader",
             options: {
               implementation: require("sass"),
-            },
-          },
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions: {
-                plugins: {
-                  "postcss-nested-import": {},
-                },
-              },
             },
           },
         ],
@@ -105,19 +50,27 @@ const config: ConfigOptions = {
       },
     ],
   },
+  plugins: [
+    new HtmlWebpackPlugin({
+      template: "./public/index.html",
+    }),
+    new MiniCssExtractPlugin({
+      filename: "status/css/[name].css",
+    }),
+    new DefinePlugin({
+      "process.env": JSON.stringify(dotenv.config().parsed),
+    }),
+  ],
   resolve: {
     extensions: ["", ".js", ".ts", ".jsx", ".tsx"],
     modules: ["node_modules"],
-    // alias: {
-    //   "styled-components": path.resolve("./node_modules/styled-components"),
-    // },
   },
-  // performance: {
-  //   hints: false,
-  //   maxEntrypointSize: 512000,
-  //   maxAssetSize: 512000,
-  // },
-  plugins: [new ProgressPlugin(), new TsConfigPathsResolvePlugin()],
+  devtool: "source-map",
+  performance: {
+    hints: false,
+    maxEntrypointSize: 512000,
+    maxAssetSize: 512000,
+  },
 };
 
 export default config;
