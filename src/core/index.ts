@@ -9,12 +9,12 @@ type ErrorListener = (error: any) => void;
 
 interface PortalTutorialRenderOptions {
   onError?: ErrorListener;
-  position?: {
-    top?: number;
-    left?: number;
-    bottom?: number;
-    right?: number;
-  };
+  // position?: {
+  //   top?: number;
+  //   left?: number;
+  //   bottom?: number;
+  //   right?: number;
+  // };
 }
 
 export class portalTutorial {
@@ -54,9 +54,9 @@ export class portalTutorial {
       ...this.options,
     };
 
-    if (options.position) {
-      this.options.position = options.position;
-    }
+    // if (options.position) {
+    //   this.options.position = options.position;
+    // }
 
     if (options.onError) {
       this.errorListeners.add(options.onError);

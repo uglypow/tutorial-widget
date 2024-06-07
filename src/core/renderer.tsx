@@ -16,8 +16,8 @@ export async function renderTutorialWidget(dom: HTMLElement) {
   window.dispatchEvent(beforeRenderEvent);
 
   const root = ReactDOM.createRoot(dom);
+  
   root.render(
-    <React.StrictMode>
       <>
         {createPortal(
           <div id="tutorial-widget">
@@ -26,7 +26,6 @@ export async function renderTutorialWidget(dom: HTMLElement) {
           document.body
         )}
       </>
-    </React.StrictMode>
   );
 
   const afterRenderEvent = new Event(AFTER_RENDER);

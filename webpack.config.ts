@@ -18,9 +18,8 @@ const postcssOptions = {
     autoprefixer(),
   ],
 };
-
 const config: ConfigOptions = {
-  mode: "production",
+  mode: "development",
   entry: "./src/index.ts",
   experiments: {
     outputModule: true,
@@ -105,19 +104,11 @@ const config: ConfigOptions = {
       },
     ],
   },
+  plugins: [new ProgressPlugin(), new TsConfigPathsResolvePlugin()],
   resolve: {
     extensions: ["", ".js", ".ts", ".jsx", ".tsx"],
     modules: ["node_modules"],
-    // alias: {
-    //   "styled-components": path.resolve("./node_modules/styled-components"),
-    // },
   },
-  // performance: {
-  //   hints: false,
-  //   maxEntrypointSize: 512000,
-  //   maxAssetSize: 512000,
-  // },
-  plugins: [new ProgressPlugin(), new TsConfigPathsResolvePlugin()],
 };
 
 export default config;
