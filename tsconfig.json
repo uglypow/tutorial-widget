@@ -12,6 +12,7 @@
     "strict": true,
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "allowSyntheticDefaultImports": true,
     "typeRoots": ["./node_modules/@types", "./src/@types"],
     "paths": {
       "@/*": ["./src/*"],
@@ -20,7 +21,7 @@
       "@hooks/*": ["./src/hooks/*"]
     }
   },
-  "include": ["./src"],
+  "include": ["src/**/*", "tailwind.css"], 
   "exclude": ["./node_modules"],
   "ts-node": {
     "compilerOptions": {

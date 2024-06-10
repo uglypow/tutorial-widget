@@ -1,3 +1,7 @@
+import "@nipacloud/nc-design-system/fonts";
+import "@nipacloud/nc-design-system/style";
+import "../main.scss";
+
 import {
   NcButton,
   NcCard,
@@ -35,7 +39,7 @@ const PageTourModal: ElementType<TooltipRenderProps> | undefined = ({
 }) => {
   return (
     <div {...tooltipProps}>
-      <NcCard className="border-2 border-black bg-white h-fit min-w-[300px] w-fit text-black">
+      <NcCard className="-border-2 -border-black -bg-white -h-fit -min-w-[300px] -w-fit -text-black">
         <NcIcon
           icon="cross"
           className="absolute top-5 right-5 hover:cursor-pointer" 

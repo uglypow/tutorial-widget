@@ -80,38 +80,38 @@ export const TOUR_STEPS_BOX: Step[] = [
         <h1>first</h1>
       </div>
     ),
-    target: "#step-1",
+    target: ".user-label--labelbox",
     placement: "bottom" as PlacementType,
     tooltipComponent: PageTourModal,
   },
-  {
-    content: (
-      <div className="flex flex-col items-center">
-        <h1>second</h1>
-      </div>
-    ),
-    target: "#step-2",
-    placement: "bottom" as PlacementType,
-    tooltipComponent: PageTourModal,
-  },
-  {
-    content: (
-      <div className="flex flex-col items-center">
-        <h1>third</h1>
-      </div>
-    ),
-    target: "#step-3",
-    placement: "bottom" as PlacementType,
-    tooltipComponent: PageTourModal,
-  },
-  {
-    content: (
-      <div className="flex flex-col items-center">
-        <h1>fourth</h1>
-      </div>
-    ),
-    target: "#step-4",
-    placement: "bottom" as PlacementType,
-    tooltipComponent: PageTourModal,
-  },
+  // {
+  //   content: (
+  //     <div className="flex flex-col items-center">
+  //       <h1>second</h1>
+  //     </div>
+  //   ),
+  //   target: "#step-2",
+  //   placement: "bottom" as PlacementType,
+  //   tooltipComponent: PageTourModal,
+  // },
+  // {
+  //   content: (
+  //     <div className="flex flex-col items-center">
+  //       <h1>third</h1>
+  //     </div>
+  //   ),
+  //   target: "#step-3",
+  //   placement: "bottom" as PlacementType,
+  //   tooltipComponent: PageTourModal,
+  // },
+  // {
+  //   content: (
+  //     <div className="flex flex-col items-center">
+  //       <h1>fourth</h1>
+  //     </div>
+  //   ),
+  //   target: "#step-4",
+  //   placement: "bottom" as PlacementType,
+  //   tooltipComponent: PageTourModal,
+  // },
 ]

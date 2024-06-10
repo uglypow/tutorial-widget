@@ -1,16 +1,21 @@
-import React, { ReactNode } from "react"
+import { createRoot } from 'react-dom/client';
+import React from 'react';
+import TutorialWidget from '@/core/TutorialWidget';
+import "../main.scss";
 
-export class ShadowRoot extends React.Component {
-  attachShadow(host) {
-    if (host == null) {
-      return
-    }
-    host.attachShadow({ mode: "open" })
-    host.shadowRoot.innerHTML = host.innerHTML
-    host.innerHTML = ""
-  }
+// Include this at the top of your file or in a separate declarations file
 
-  render() {
-    return <span ref={this.attachShadow}>{this.props as ReactNode}</span>
+
+class ShadowWrapper extends HTMLElement {
+  connectedCallback() {
+    const shadowRoot = this.attachShadow({ mode: 'open' });
+    const container = document.createElement('div');
+    shadowRoot.appendChild(container);
+    const root = createRoot(container);
+    root.render(<TutorialWidget />);
   }
 }
+
+customElements.define('shadow-wrapper', ShadowWrapper);
+
+// Then you can use <shadow-wrapper></shadow-wrapper> in your HTML.

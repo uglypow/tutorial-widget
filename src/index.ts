@@ -1,7 +1,3 @@
-import "@nipacloud/nc-design-system/fonts";
-import "@nipacloud/nc-design-system/style";
-import "./main.scss";
-
 import { portalTutorial } from "./core";
 
 const portalTutorialKey = "ncPortalTutorial";

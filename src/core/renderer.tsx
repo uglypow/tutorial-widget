@@ -9,23 +9,26 @@ import { AFTER_RENDER, BEFORE_RENDER } from "../constants/event";
 import TutorialWidget from "./TutorialWidget";
 
 export async function renderTutorialWidget(dom: HTMLElement) {
-  await applyPolyfills();
-  await defineCustomElements();
+  // await applyPolyfills();
+  // await defineCustomElements();
 
   const beforeRenderEvent = new Event(BEFORE_RENDER);
   window.dispatchEvent(beforeRenderEvent);
 
   const root = ReactDOM.createRoot(dom);
-  
+
   root.render(
-      <>
-        {createPortal(
+    <>
+      {createPortal(
+        <shadow-wrapper>
           <div id="tutorial-widget">
             <TutorialWidget />
-          </div>,
-          document.body
-        )}
-      </>
+          </div>
+        </shadow-wrapper>
+        ,
+        document.body
+      )}
+    </>
   );
 
   const afterRenderEvent = new Event(AFTER_RENDER);
