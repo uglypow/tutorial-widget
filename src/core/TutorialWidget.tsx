@@ -1,6 +1,12 @@
-import { TOUR_STEPS_BOX } from '@/constants/steps'
+import "@nipacloud/nc-design-system/fonts";
+import "@nipacloud/nc-design-system/style";
+import "../main.scss";
+
+
+import { TOUR_STEPS } from '@/constants/steps'
 import { FC } from "react"
 import Joyride from "react-joyride"
+
 
 const TutorialWidget: FC = () => {
   return (
@@ -10,7 +16,7 @@ const TutorialWidget: FC = () => {
         showSkipButton
         callback={() => {}}
         run={true}
-        steps={TOUR_STEPS_BOX}
+        steps={TOUR_STEPS}
         disableOverlay={true}
         floaterProps={{
           styles: {

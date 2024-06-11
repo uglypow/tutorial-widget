@@ -85,16 +85,16 @@ const config: ConfigOptions = {
               implementation: require("sass"),
             },
           },
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions: {
-                plugins: {
-                  "postcss-nested-import": {},
-                },
-              },
-            },
-          },
+          // {
+          //   loader: "postcss-loader",
+          //   options: {
+          //     postcssOptions: {
+          //       plugins: {
+          //         "postcss-nested-import": {},
+          //       },
+          //     },
+          //   },
+          // },
         ],
       },
       {

@@ -1,12 +1,9 @@
-import "@nipacloud/nc-design-system/fonts";
-import "@nipacloud/nc-design-system/style";
-import "../main.scss";
-
 import {
   NcButton,
   NcCard,
   NcCardFooter,
   NcCardTitle,
+  NcChip,
   NcIcon,
 } from "@nipacloud/nc-design-system-react"
 import { ElementType } from "react"
@@ -38,13 +35,14 @@ const PageTourModal: ElementType<TooltipRenderProps> | undefined = ({
   tooltipProps,
 }) => {
   return (
-    <div {...tooltipProps}>
-      <NcCard className="border-2 border-black bg-white -h-fit min-w-[300px] w-fit text-black">
+    <div {...tooltipProps} id="tutorial-modal" className="prefix-wrap">
+      <NcCard className="border-2 border-black bg-white h-fit min-w-[300px] w-fit text-black">
         <NcIcon
           icon="cross"
           className="absolute top-5 right-5 hover:cursor-pointer" 
           onClick={closeProps.onClick}
         />
+        <NcChip active>Chip</NcChip>
         <NcCardTitle>{step.content}</NcCardTitle>
 
         <NcCardFooter className="flex flex-col">

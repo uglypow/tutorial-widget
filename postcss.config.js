@@ -1,25 +1,19 @@
+const prefixwrap = require('postcss-prefixwrap');
+
 const config = {
-  plugins: {
-    "postcss-import": {
+  plugins: [
+    require('postcss-import')({
       resolve: (id, basedir) => {
         if (id.startsWith("~")) {
-          return require.resolve(id.slice(1), { paths: [basedir] })
+          return require.resolve(id.slice(1), { paths: [basedir] });
         }
-        return id
-      },
-    },
-    tailwindcss: {},
-    autoprefixer: {},
-    // "postcss-prefix-selector": {
-    //   prefix: "-oak",
-    //   transform: (prefix, selector, prefixedSelector) => {
-    //     if (selector.startsWith(".")) {
-    //       return prefix + selector
-    //     }
-    //     return selector
-    //   },
-    // },
-  },
-}
+        return id;
+      }
+    }),
+    require('tailwindcss'),
+    require('autoprefixer'),
+    prefixwrap('.prefix-wrap')
+  ]
+};
 
-module.exports = config
+module.exports = config;
