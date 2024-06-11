@@ -1,14 +1,14 @@
-import { StoreApi } from "zustand";
-import { IWidgetInitOptions } from "../@types/widget";
-import { apiClient } from "../services/httpClient";
-import { IWidgetStore, createWidgetStore } from "../store/widget";
-import { renderTutorialWidget } from "./renderer";
+import { StoreApi } from "zustand"
+import { IWidgetInitOptions } from "../@types/widget"
+import { apiClient } from "../services/httpClient"
+import { IWidgetStore, createWidgetStore } from "../store/widget"
+import { renderTutorialWidget } from './renderer'
 
-type Listener = () => void;
-type ErrorListener = (error: any) => void;
+type Listener = () => void
+type ErrorListener = (error: any) => void
 
 interface PortalTutorialRenderOptions {
-  onError?: ErrorListener;
+  onError?: ErrorListener
   // position?: {
   //   top?: number;
   //   left?: number;
@@ -18,15 +18,15 @@ interface PortalTutorialRenderOptions {
 }
 
 export class portalTutorial {
-  public listeners: Set<Listener> = new Set();
-  public errorListeners: Set<ErrorListener> = new Set();
-  public options!: IWidgetInitOptions;
-  public store: StoreApi<IWidgetStore> = createWidgetStore();
+  public listeners: Set<Listener> = new Set()
+  public errorListeners: Set<ErrorListener> = new Set()
+  public options!: IWidgetInitOptions
+  public store: StoreApi<IWidgetStore> = createWidgetStore()
 
   public init(options: IWidgetInitOptions) {
-    this.options = options;
+    this.options = options
 
-    apiClient.defaults.baseURL = options.baseUrl;
+    apiClient.defaults.baseURL = options.baseUrl
   }
 
   public onLoad(callback: Listener) {
@@ -34,11 +34,11 @@ export class portalTutorial {
       document.readyState === "complete" ||
       document.readyState === "interactive"
     ) {
-      callback();
-      return;
+      callback()
+      return
     }
 
-    this.listeners.add(callback);
+    this.listeners.add(callback)
   }
 
   public render(
@@ -46,53 +46,53 @@ export class portalTutorial {
     options: PortalTutorialRenderOptions
   ) {
     if (document.querySelector("#tutorial-widget")) {
-      console.warn("Tutorial is already rendered");
-      return;
+      console.warn("Tutorial is already rendered")
+      return
     }
 
     this.options = {
       ...this.options,
-    };
+    }
 
     // if (options.position) {
     //   this.options.position = options.position;
     // }
 
     if (options.onError) {
-      this.errorListeners.add(options.onError);
+      this.errorListeners.add(options.onError)
     }
 
-    let mountElement: HTMLElement | null;
+    let mountElement: HTMLElement | null
 
     if (typeof element === "string") {
-      mountElement = document.querySelector(element);
+      mountElement = document.querySelector(element)
     } else {
-      mountElement = element;
+      mountElement = element
     }
 
     if (mountElement) {
-      renderTutorialWidget(mountElement);
+      renderTutorialWidget(mountElement)
     }
   }
 
   public open() {
     this.store.setState({
       widgetOpen: true,
-    });
+    })
   }
 
   public destroy() {
-    const element = document.querySelector("#tutorial-widget");
+    const element = document.querySelector("#tutorial-widget")
 
     if (element) {
-      element.remove();
+      element.remove()
     }
 
-    this.errorListeners = new Set();
-    this.listeners = new Set();
+    this.errorListeners = new Set()
+    this.listeners = new Set()
   }
 
   public deleteListener = (listener: Listener) => {
-    this.listeners.delete(listener);
-  };
+    this.listeners.delete(listener)
+  }
 }

@@ -10,6 +10,9 @@ const config = {
     },
     tailwindcss: {},
     autoprefixer: {},
+    // 'postcss-rename': {
+    //   prefix: '-',
+    // },
   },
 };
 

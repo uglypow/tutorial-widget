@@ -1,14 +1,11 @@
-import TutorialWidget from "@/core/TutorialWidget"
-import ReactDOM from "react-dom"
+import { FC } from "react"
 
-class MyReactWidget extends HTMLElement {
-  connectedCallback() {
-    ReactDOM.render(<TutorialWidget />, this)
-  }
-
-  disconnectedCallback() {
-    ReactDOM.unmountComponentAtNode(this)
-  }
+const Empthy: FC = () => {
+  return (
+    <>
+      <div className="text-red-500 text-9xl">TEST</div>
+    </>
+  )
 }
 
-customElements.define("my-react-widget", MyReactWidget)
+export default Empthy

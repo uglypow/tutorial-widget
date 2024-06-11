@@ -1,3 +1,5 @@
+// import "./main.scss";
+
 import { portalTutorial } from "./core";
 
 const portalTutorialKey = "ncPortalTutorial";

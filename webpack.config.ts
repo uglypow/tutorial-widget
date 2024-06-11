@@ -8,7 +8,6 @@ import { ProgressPlugin } from "webpack";
 import { ConfigOptions } from "webpack-cli";
 import important from "./plugins/postcss/important";
 import TsConfigPathsResolvePlugin from "./plugins/webpack/tsconfigPathsResolve";
-import tailwindClassnamePrefixLoader from "tailwind-classname-prefix-loader";
 
 
 const postcssOptions = {
@@ -63,12 +62,12 @@ const config: ConfigOptions = {
         use: [
           "style-loader",
           "css-loader",
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions,
-            },
-          },
+          // {
+          //   loader: "postcss-loader",
+          //   options: {
+          //     postcssOptions,
+          //   },
+          // },
         ],
       },
       {
@@ -104,36 +103,6 @@ const config: ConfigOptions = {
         test: /\.(svg|jpg|jpeg|png|woff|eot|gif|ttf)$/,
         type: "asset/resource",
       },
-      {
-        test: /\.(js|mjs|jsx|ts|tsx)$/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              }
-          },
-          {
-            loader: './node_modules/tailwind-classname-prefix-loader/lib/index.js',
-            options: {
-              prefix: 'prefix-',
-              attrs: [
-                // additional attributes to prefix
-
-                // ie. transition classes from React Transition Group component
-                'enter',
-                'enterFrom',
-                'enterTo',
-                'leave',
-                'leaveFrom',
-                'leaveTo',
-
-                // ie. CSS Module
-                'styleName'
-              ]
-            }
-          }
-        ]
-      }
     ],
   },
   plugins: [new ProgressPlugin(), new TsConfigPathsResolvePlugin()],
