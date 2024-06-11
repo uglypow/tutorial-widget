@@ -1,25 +1,22 @@
-import autoprefixer from "autoprefixer";
-import path from "path";
+import path from "path"
+import TerserWebpackPlugin from "terser-webpack-plugin"
+import { ProgressPlugin } from "webpack"
+import { ConfigOptions } from "webpack-cli"
+import TsConfigPathsResolvePlugin from "./plugins/webpack/tsconfigPathsResolve"
 import postcssImport from "postcss-import";
 import postcssNestedImport from "postcss-nested-import";
 import tailwindcss from "tailwindcss";
-import TerserWebpackPlugin from "terser-webpack-plugin";
-import { ProgressPlugin } from "webpack";
-import { ConfigOptions } from "webpack-cli";
-import important from "./plugins/postcss/important";
-import TsConfigPathsResolvePlugin from "./plugins/webpack/tsconfigPathsResolve";
-import tailwindClassnamePrefixLoader from "tailwind-classname-prefix-loader";
-
+import autoprefixer from 'autoprefixer'
 
 const postcssOptions = {
   plugins: [
     postcssImport(),
     postcssNestedImport(),
     tailwindcss(),
-    important(),
+    // important(),
     autoprefixer(),
   ],
-};
+}
 const config: ConfigOptions = {
   mode: "development",
   entry: "./src/index.ts",
@@ -33,13 +30,13 @@ const config: ConfigOptions = {
       type: "module",
     },
     filename: (pathData) => {
-      const chunk = pathData.chunk!;
+      const chunk = pathData.chunk!
 
       if (chunk.name === "main") {
-        return "index.js";
+        return "index.js"
       }
 
-      return "[name].js";
+      return "[name].js"
     },
     assetModuleFilename: "assets/[name][ext]",
     clean: true,
@@ -63,12 +60,12 @@ const config: ConfigOptions = {
         use: [
           "style-loader",
           "css-loader",
-          {
-            loader: "postcss-loader",
-            options: {
-              postcssOptions,
-            },
-          },
+          // {
+          //   loader: "postcss-loader",
+          //   options: {
+          //     postcssOptions,
+          //   },
+          // },
         ],
       },
       {
@@ -104,36 +101,6 @@ const config: ConfigOptions = {
         test: /\.(svg|jpg|jpeg|png|woff|eot|gif|ttf)$/,
         type: "asset/resource",
       },
-      {
-        test: /\.(js|mjs|jsx|ts|tsx)$/,
-        use: [
-          {
-            loader: 'babel-loader',
-            options: {
-              }
-          },
-          {
-            loader: './node_modules/tailwind-classname-prefix-loader/lib/index.js',
-            options: {
-              prefix: 'prefix-',
-              attrs: [
-                // additional attributes to prefix
-
-                // ie. transition classes from React Transition Group component
-                'enter',
-                'enterFrom',
-                'enterTo',
-                'leave',
-                'leaveFrom',
-                'leaveTo',
-
-                // ie. CSS Module
-                'styleName'
-              ]
-            }
-          }
-        ]
-      }
     ],
   },
   plugins: [new ProgressPlugin(), new TsConfigPathsResolvePlugin()],
@@ -141,6 +108,6 @@ const config: ConfigOptions = {
     extensions: ["", ".js", ".ts", ".jsx", ".tsx"],
     modules: ["node_modules"],
   },
-};
+}
 
-export default config;
+export default config

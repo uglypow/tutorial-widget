@@ -1,5 +1,4 @@
 import { portalTutorial } from "./core";
-
 const portalTutorialKey = "ncPortalTutorial";
 
 if (portalTutorialKey in window) {
