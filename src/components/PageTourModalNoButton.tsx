@@ -1,5 +1,4 @@
 import {
-  NcButton,
   NcCard,
   NcCardFooter,
   NcCardTitle,
@@ -21,7 +20,7 @@ interface IPageTourModal {
   tooltipProps: any // The root element props (including ref)
 }
 
-const PageTourModal: ElementType<TooltipRenderProps> | undefined = ({
+const PageTourModalNoButton: ElementType<TooltipRenderProps> | undefined = ({
   continuous,
   index,
   isLastStep,
@@ -36,7 +35,7 @@ const PageTourModal: ElementType<TooltipRenderProps> | undefined = ({
   return (
     <div {...tooltipProps} className="prefix-wrap">
       <NcCard className="border-2 border-black bg-white h-fit min-w-[300px] w-fit text-black">
-        <div className='p-2 m-2'>
+        <div className="p-2 m-2">
           <NcIcon
             icon="cross"
             className="absolute top-5 right-5 hover:cursor-pointer"
@@ -47,18 +46,6 @@ const PageTourModal: ElementType<TooltipRenderProps> | undefined = ({
           </NcCardTitle>
 
           <NcCardFooter className="flex flex-col">
-            <div className="flex flex-row justify-between">
-              {index === 0 ? (
-                <div></div>
-              ) : (
-                <NcButton size="sm" onClick={backProps.onClick}>
-                  Back
-                </NcButton>
-              )}
-              <NcButton size="sm" onClick={primaryProps.onClick}>
-                {isLastStep ? <>Last</> : <>Next</>}
-              </NcButton>
-            </div>
             <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
               <div
                 className="bg-blue-600 h-2.5 rounded-full"
@@ -83,4 +70,4 @@ const PageTourModal: ElementType<TooltipRenderProps> | undefined = ({
   )
 }
 
-export default PageTourModal
+export default PageTourModalNoButton

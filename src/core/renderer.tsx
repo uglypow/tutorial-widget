@@ -3,6 +3,8 @@ import ReactDOM from "react-dom/client"
 import { AFTER_RENDER, BEFORE_RENDER } from "../constants/event"
 import TutorialWidget from "./TutorialWidget"
 
+let root: ReactDOM.Root
+
 export async function renderTutorialWidget(dom: HTMLElement) {
   // await applyPolyfills();
   // await defineCustomElements();
@@ -10,12 +12,16 @@ export async function renderTutorialWidget(dom: HTMLElement) {
   const beforeRenderEvent = new Event(BEFORE_RENDER)
   window.dispatchEvent(beforeRenderEvent)
 
-  const root = ReactDOM.createRoot(dom)
+  if (root) {
+    root.unmount()
+  }
+
+  root = ReactDOM.createRoot(dom)
 
   root.render(
     <>
       {createPortal(
-        <div id="tutorial-widget">
+        <div id="react-tutorial-widget">
           <TutorialWidget />
         </div>,
         document.body

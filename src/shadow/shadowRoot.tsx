@@ -12,7 +12,7 @@ class ShadowWrapper extends HTMLElement {
     const container = document.createElement('div');
     shadowRoot.appendChild(container);
     const root = createRoot(container);
-    root.render(<TutorialWidget />);
+    // root.render(<TutorialWidget />);
   }
 }
 

@@ -4,7 +4,7 @@ export {};
 
 declare global {
   interface Window {
-    portalTutorial: portalTutorial;
+    ncPortalTutorial: portalTutorial;
     [key: string]: any;
   }
 }
