@@ -7,20 +7,13 @@ import { useWidgetStore } from "@/store/widget"
 import { FC } from "react"
 import Joyride, { ACTIONS, CallBackProps, EVENTS, STATUS } from "react-joyride"
 
-interface State {
-  run: boolean
-  isLoading: boolean
-  stepIndex: number
-}
-
 const TutorialWidget: FC = () => {
   const tourStore = useTourStore()
   const widgetStore = useWidgetStore()
   const { state, setState } = tourStore
   const steps = window.ncPortalTutorial.options.steps
-  console.log(steps)
 
-  if (!state.steps) {
+  if (!steps) {
     return
   }
 
@@ -28,10 +21,12 @@ const TutorialWidget: FC = () => {
     const { action, index, status, type } = data
 
     if (action === ACTIONS.CLOSE) {
+      widgetStore.setWidgetOpen(false)
       setState({ ...state, run: false, stepIndex: 0 })
     } else if (
       ([STATUS.FINISHED, STATUS.SKIPPED] as string[]).includes(status)
     ) {
+      widgetStore.setWidgetOpen(false)
       setState({ ...state, run: false, stepIndex: 0 })
     } else if (
       ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND] as string[]).includes(type)
@@ -48,9 +43,8 @@ const TutorialWidget: FC = () => {
         continuous
         callback={handleJoyrideCallback}
         run={widgetStore.widgetOpen}
-        steps={state.steps!}
+        steps={steps}
         stepIndex={state.stepIndex}
-        disableOverlay={true}
         // floaterProps={{
         //   styles: {
         //     floater: {

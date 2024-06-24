@@ -1,4 +1,3 @@
-import { getStepFromLocation } from "@/utils"
 import { Step } from "react-joyride"
 import { useStore } from "zustand"
 import { createStore } from "zustand/vanilla"
@@ -6,7 +5,7 @@ import { createStore } from "zustand/vanilla"
 export interface ITourState {
   run: boolean
   stepIndex: number
-  steps: Step[] | null
+  // steps: Step[] | null
 }
 
 export interface ITourStore {
@@ -18,14 +17,13 @@ export interface ITourStore {
 const initialState: ITourState = {
   run: true,
   stepIndex: 0,
-  steps: null,
+  // steps: null,
 }
 
 export const createTourStore = () => {
   return createStore<ITourStore>((set) => ({
     state: initialState,
     setState: (val) => {
-      console.log(val)
       set({
         state: val,
       })
@@ -33,7 +31,7 @@ export const createTourStore = () => {
     reset: () => {
       set({
         state: {
-          ...initialState
+          ...initialState,
         },
       })
     },

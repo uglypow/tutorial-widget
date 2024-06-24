@@ -1,6 +1,6 @@
-import { componentMapping } from "@/constants/component"
-import { ITourState, ITourStore, createTourStore } from "@/store/tutorialState"
-import { Placement, Step } from "react-joyride"
+import { TourComponent, componentMapping } from "@/constants/component"
+import { ITourStore, createTourStore } from "@/store/tutorialState"
+import { Step } from "react-joyride"
 import { StoreApi } from "zustand"
 import { IWidgetInitOptions } from "../@types/widget"
 import { apiClient } from "../services/httpClient"
@@ -10,10 +10,9 @@ import { renderTutorialWidget } from "./renderer"
 type Listener = () => void
 type ErrorListener = (error: any) => void
 
-type TourComponent = "PageTourModal" | "PageTourModalNoButton" | "Empthy"
-
 interface ITourStep extends Step {
-  component: TourComponent,
+  component: TourComponent
+  targetOnClickCallback: () => void
 }
 
 interface IPortalTutorialRenderOptions {
@@ -50,10 +49,6 @@ export class portalTutorial {
     element: string | HTMLElement,
     options: IPortalTutorialRenderOptions
   ) {
-    // if (document.querySelector("#react-tutorial-widget")) {
-    //   console.warn("Tutorial is already rendered")
-    //   return
-    // }
 
     this.options = {
       ...this.options,
@@ -61,18 +56,19 @@ export class portalTutorial {
 
     if (options.steps) {
       this.options.steps = options.steps.map((step) => ({
-        ...options.steps,
+        ...step,
         target: step.target,
         content: step.content,
-        placement: step.placement,
+        placement: step.placement || 'auto',
         tooltipComponent: componentMapping[step.component],
       }))
-      this.tourStore.setState({
-        state: {
-          ...this.tourStore.getState().state,
-          steps: this.options.steps,
-        },
-      })
+      this.addClickListeners(options.steps)
+      // this.tourStore.setState({
+      //   state: {
+      //     ...this.tourStore.getState().state,
+      //     steps: this.options.steps,
+      //   },
+      // })
     }
 
     if (options.onError) {
@@ -88,8 +84,6 @@ export class portalTutorial {
     }
 
     if (mountElement) {
-      console.log("rendering")
-      console.log(this.tourStore.getState().state)
       renderTutorialWidget(mountElement)
     }
   }
@@ -100,14 +94,33 @@ export class portalTutorial {
     })
   }
 
-  public updateState(newState: ITourState, timeout = 100) {
+  public close() {
+    this.widgetStore.setState({
+      widgetOpen: false,
+    })
+  }
+
+  // public updateState(newState: ITourState, timeout = 100) {
+  //   const state = this.tourStore.getState().state
+  //   setTimeout(() => {
+  //     this.tourStore.setState({
+  //       state: {
+  //         ...state,
+  //         run: newState.run,
+  //         stepIndex: newState.stepIndex,
+  //       },
+  //     })
+  //   }, timeout)
+  // }
+
+  public updateStepIndex(offset = 1, timeout = 100) {
+    console.log("update step index")
     const state = this.tourStore.getState().state
     setTimeout(() => {
       this.tourStore.setState({
         state: {
           ...state,
-          run: newState.run,
-          stepIndex: newState.stepIndex,
+          stepIndex: state.stepIndex + offset,
         },
       })
     }, timeout)
@@ -117,9 +130,7 @@ export class portalTutorial {
     // const element = document.querySelector("#react-tutorial-widget")
 
     this.tourStore.getState().reset()
-    this.widgetStore.setState({
-      widgetOpen: false,
-    })
+    this.close()
 
     // if (element) {
     //   element.remove()
@@ -128,7 +139,23 @@ export class portalTutorial {
     this.errorListeners = new Set()
     this.listeners = new Set()
   }
+
   public deleteListener = (listener: Listener) => {
     this.listeners.delete(listener)
+  }
+
+  private addClickListeners(steps: ITourStep[]) {
+    steps.forEach((step) => {
+      const element = document.querySelector(step.target as string)
+      if (element && step.targetOnClickCallback) {
+        const eventHandler = () => {
+          if (this.widgetStore.getState().widgetOpen) {
+            step.targetOnClickCallback()
+            // element.removeEventListener("click", eventHandler)
+          }
+        }
+        element.addEventListener("click", eventHandler)
+      }
+    })
   }
 }
