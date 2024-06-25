@@ -11,6 +11,7 @@ type Listener = () => void
 type ErrorListener = (error: any) => void
 
 interface IPortalTutorialRenderOptions {
+  userId: string;
   onError?: ErrorListener
   steps: ITourStep[]
   joyrideProps?: IJoyrideProps
@@ -47,6 +48,7 @@ export class portalTutorial {
   ) {
     this.options = {
       ...this.options,
+      userId: options.userId,
     }
 
     if (options.steps) {

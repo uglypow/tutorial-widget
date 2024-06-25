@@ -1,4 +1,5 @@
 import {
+  NcButton,
   NcCard,
   NcCardFooter,
   NcCardTitle,
@@ -34,8 +35,8 @@ const PageTourModalNoButton: ElementType<TooltipRenderProps> | undefined = ({
 }) => {
   return (
     <div {...tooltipProps} className="prefix-wrap">
-      <NcCard className="border-2 border-black bg-white h-fit min-w-[300px] w-fit text-black"> 
-        <div className="p-2 m-2">
+      <NcCard className="border-2 border-black bg-white h-fit min-w-[300px] w-fit text-black">
+        <div className='p-2 m-2'>
           <NcIcon
             icon="cross"
             className="absolute top-5 right-5 hover:cursor-pointer"
