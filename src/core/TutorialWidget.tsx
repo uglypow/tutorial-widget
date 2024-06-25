@@ -52,6 +52,11 @@ const TutorialWidget: FC = () => {
         //     },
         //   },
         // }}
+        styles={{
+          options: {
+            zIndex: 1000, // Apply a high z-index to the Joyride options
+          },
+        }}
       />
     </>
   )
