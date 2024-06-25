@@ -8,5 +8,5 @@ module.exports = {
   // corePlugins: {
   //   preflight: false, // Make border dissappear somehow
   // },
-  // important: '#tutorial-modal', // Also work but sometime doesn't override
+  // important: '#tutorial-modal', // Also fix layout break but might break the app
 };

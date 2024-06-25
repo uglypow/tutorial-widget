@@ -12,6 +12,7 @@ const TutorialWidget: FC = () => {
   const widgetStore = useWidgetStore()
   const { state, setState } = tourStore
   const steps = window.ncPortalTutorial.options.steps
+  const joyrideProps = window.ncPortalTutorial.options.joyrideProps
 
   if (!steps) {
     return
@@ -45,18 +46,12 @@ const TutorialWidget: FC = () => {
         run={widgetStore.widgetOpen}
         steps={steps}
         stepIndex={state.stepIndex}
-        // floaterProps={{
-        //   styles: {
-        //     floater: {
-        //       position: "fixed",
-        //     },
-        //   },
-        // }}
         styles={{
           options: {
-            zIndex: 1000, // Apply a high z-index to the Joyride options
+            zIndex: 1000,
           },
         }}
+        {...joyrideProps}
       />
     </>
   )

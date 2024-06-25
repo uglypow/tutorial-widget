@@ -45,7 +45,6 @@ const PageTourModal: ElementType<TooltipRenderProps> | undefined = ({
           <NcCardTitle className="flex flex-col items-center">
             {step.content}
           </NcCardTitle>
-
           <NcCardFooter className="flex flex-col">
             <div className="flex flex-row justify-between">
               {index === 0 ? (

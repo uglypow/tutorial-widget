@@ -44,7 +44,7 @@ export const TOUR_LIST: TourList[] = [
           </div>
         ),
         target: ".modal-content",
-        tooltipComponent: PageTourModal,
+        tooltipComponent: PageTourModal, 
       },
       {
         content: (

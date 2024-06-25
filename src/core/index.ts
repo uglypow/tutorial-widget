@@ -1,23 +1,19 @@
 import { TourComponent, componentMapping } from "@/constants/component"
 import { ITourStore, createTourStore } from "@/store/tutorialState"
-import { Step } from "react-joyride"
 import { StoreApi } from "zustand"
 import { IWidgetInitOptions } from "../@types/widget"
 import { apiClient } from "../services/httpClient"
 import { IWidgetStore, createWidgetStore } from "../store/widget"
 import { renderTutorialWidget } from "./renderer"
+import { IJoyrideProps, ITourStep } from "@/@types/joyride"
 
 type Listener = () => void
 type ErrorListener = (error: any) => void
 
-interface ITourStep extends Step {
-  component: TourComponent
-  targetOnClickCallback: () => void
-}
-
 interface IPortalTutorialRenderOptions {
   onError?: ErrorListener
   steps: ITourStep[]
+  joyrideProps?: IJoyrideProps
 }
 
 export class portalTutorial {
@@ -49,7 +45,6 @@ export class portalTutorial {
     element: string | HTMLElement,
     options: IPortalTutorialRenderOptions
   ) {
-
     this.options = {
       ...this.options,
     }
@@ -59,9 +54,12 @@ export class portalTutorial {
         ...step,
         target: step.target,
         content: step.content,
-        placement: step.placement || 'auto',
+        placement: step.placement || "auto",
         tooltipComponent: componentMapping[step.component],
       }))
+      if (options.joyrideProps) {
+        this.options.joyrideProps = options.joyrideProps
+      }
       this.addClickListeners(options.steps)
       // this.tourStore.setState({
       //   state: {
