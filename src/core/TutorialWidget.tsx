@@ -8,9 +8,14 @@ import { FC } from "react"
 import Joyride, { ACTIONS, CallBackProps, EVENTS, STATUS } from "react-joyride"
 
 const TutorialWidget: FC = () => {
-  const tourStore = useTourStore()
-  const widgetStore = useWidgetStore()
-  const { state, setState } = tourStore
+  const [state, setState] = useTourStore((store) => [
+    store.state,
+    store.setState,
+  ])
+  const [widgetOpen, setWidgetOpen] = useWidgetStore((state) => [
+    state.widgetOpen,
+    state.setWidgetOpen,
+  ])
   const steps = window.ncPortalTutorial.options.steps
   const joyrideProps = window.ncPortalTutorial.options.joyrideProps
 
@@ -22,12 +27,12 @@ const TutorialWidget: FC = () => {
     const { action, index, status, type } = data
 
     if (action === ACTIONS.CLOSE) {
-      widgetStore.setWidgetOpen(false)
+      setWidgetOpen(false)
       setState({ ...state, run: false, stepIndex: 0 })
     } else if (
       ([STATUS.FINISHED, STATUS.SKIPPED] as string[]).includes(status)
     ) {
-      widgetStore.setWidgetOpen(false)
+      setWidgetOpen(false)
       setState({ ...state, run: false, stepIndex: 0 })
     } else if (
       ([EVENTS.STEP_AFTER, EVENTS.TARGET_NOT_FOUND] as string[]).includes(type)
@@ -35,7 +40,6 @@ const TutorialWidget: FC = () => {
       const nextStepIndex = index + (action === ACTIONS.PREV ? -1 : 1)
       setState({ ...state, stepIndex: nextStepIndex })
     }
-    // console.log(data)
   }
 
   return (
@@ -43,7 +47,7 @@ const TutorialWidget: FC = () => {
       <Joyride
         continuous
         callback={handleJoyrideCallback}
-        run={widgetStore.widgetOpen}
+        run={widgetOpen}
         steps={steps}
         stepIndex={state.stepIndex}
         styles={{

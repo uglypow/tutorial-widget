@@ -13,7 +13,6 @@ const postcssOptions = {
     postcssImport(),
     postcssNestedImport(),
     tailwindcss(),
-    // important(),
     autoprefixer(),
   ],
 }
@@ -66,6 +65,7 @@ const config: ConfigOptions = {
           //     postcssOptions,
           //   },
           // },
+          // ** Cause `text-grey-1000` class does not exist. ERROR **
         ],
       },
       {
@@ -95,6 +95,7 @@ const config: ConfigOptions = {
           //     },
           //   },
           // },
+          // ** Break tailwind styles **
         ],
       },
       {

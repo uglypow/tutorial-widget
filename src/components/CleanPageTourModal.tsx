@@ -31,22 +31,19 @@ const CleanPageTourModal: ElementType<TooltipRenderProps> | undefined = ({
             <div className="text-base">{step.content}</div>
           </NcCardBody>
           <NcCardFooter>
-            {step.hideFooter ? (
-              <div />
-            ) : (
-              <div className="flex flex-row justify-between">
-                {step.showProgress ? (
-                  <div>
-                    {index + 1}/{size}
-                  </div>
-                ) : (
-                  <div />
-                )}
-                <NcButton size="md" onClick={primaryProps.onClick}>
-                  {isLastStep ? <>Done</> : <>Next</>}
-                </NcButton>
-              </div>
-            )}
+            {step.hideFooter ? <div />:<div className="flex flex-row justify-between">
+              {step.showProgress ? (
+                <div>
+                  {index + 1}/{size}
+                </div>
+              ) : (
+                <div />
+              )}
+              <NcButton size="md" onClick={primaryProps.onClick}>
+                {isLastStep ? <>Done</> : <>Next</>}
+              </NcButton>
+            </div>}
+            
           </NcCardFooter>
         </div>
       </NcCard>

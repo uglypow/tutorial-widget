@@ -14,14 +14,12 @@ if (portalTutorialKey in window) {
   })
 
   const onload = () => {
-    console.log("DOMContentLoaded fired")
     for (const listener of window[portalTutorialKey].listeners) {
       listener()
       window[portalTutorialKey].deleteListener(listener)
     }
   }
 
-  console.log(document.readyState)
   if (document.readyState === "complete") {
     onload()
   } else {

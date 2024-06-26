@@ -6,12 +6,13 @@ import { apiClient } from "../services/httpClient"
 import { IWidgetStore, createWidgetStore } from "../store/widget"
 import { renderTutorialWidget } from "./renderer"
 import { IJoyrideProps, ITourStep } from "@/@types/joyride"
+import localStorageService from "@/services/localStorage"
 
 type Listener = () => void
 type ErrorListener = (error: any) => void
 
 interface IPortalTutorialRenderOptions {
-  userId: string;
+  userId: string
   onError?: ErrorListener
   steps: ITourStep[]
   joyrideProps?: IJoyrideProps
@@ -71,6 +72,10 @@ export class portalTutorial {
       // })
     }
 
+    if (this.options.storage) {
+      localStorageService.initUserTutorialStorage()
+    }
+
     if (options.onError) {
       this.errorListeners.add(options.onError)
     }
@@ -114,7 +119,6 @@ export class portalTutorial {
   // }
 
   public updateStepIndex(offset = 1, timeout = 100) {
-    console.log("update step index")
     const state = this.tourStore.getState().state
     setTimeout(() => {
       this.tourStore.setState({
