@@ -1,9 +1,10 @@
+import ReactJoyride, { Step } from "react-joyride"
+import { IJoyrideProps } from "./joyride"
+
 export interface IWidgetInitOptions {
-  baseUrl: string;
-  // position?: {
-  //   top?: number;
-  //   left?: number;
-  //   bottom?: number;
-  //   right?: number;
-  // };
+  userId: string;
+  baseUrl: string
+  storage?: boolean;
+  steps: Step[]
+  joyrideProps: IJoyrideProps
 }
